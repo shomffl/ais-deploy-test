@@ -4,6 +4,7 @@
 ## ローカル環境開発のセットアップ 
 
 １，docker 及び docker-compose のインストール
+
 https://docs.docker.jp/compose/install.html
 
 ２，docker でのビルド、コンテナー立ち上げ
@@ -17,13 +18,13 @@ start Uvicorn running on http://0.0.0.0:8000...
 ```
 
 
-３, OpenAPI
-API仕様書
+３, API仕様書を確認。以下を元にフロントエンド開発
+
 http://localhost:8000/docs#/
 
 
 
-(optional)DBのマイグレーション
+４， (optional)DBのマイグレーション
 ```
 $ docker-compose exec app poetry run python -m api.migrate_db
 ```
