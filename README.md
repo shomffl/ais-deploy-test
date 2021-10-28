@@ -18,7 +18,7 @@ start Uvicorn running on http://0.0.0.0:8000...
 ```
 
 
-３, API仕様書を確認。以下を元にフロントエンド開発
+３, API仕様書を確認。こちらを元にフロントエンド開発。
 
 http://localhost:8000/docs#/
 
