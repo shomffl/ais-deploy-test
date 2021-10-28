@@ -24,7 +24,7 @@ http://localhost:8000/docs#/
 
 
 
-４， (optional)DBのマイグレーション
+４， (現在はoptional)DBのマイグレーション
 ```
 $ docker-compose exec app poetry run python -m api.migrate_db
 ```
