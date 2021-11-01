@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Button } from './Button';
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
         >
           Learn React
         </a>
+        <p className="text-green-200">tailwind import</p>
+        <Button>Click!</Button>
       </header>
     </div>
   );
