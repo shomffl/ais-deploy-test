@@ -21,7 +21,6 @@ function App() {
         </a>
         <p className="text-green-200">tailwind import</p>
         <Button>Click!</Button>
-        <Button>Click twice!</Button>
       </header>
     </div>
   );
