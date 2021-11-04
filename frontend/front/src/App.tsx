@@ -9,17 +9,30 @@ function App() {
   // 全ての本詳細を管理するstate
   const [books, setBooks] = useState([]);
 
+  // responseの型定義
+  type Books = [
+    {
+      id: number;
+      book_collection_number: string;
+      book_unique_number: string;
+      title: string;
+      author: string;
+      publisher: string;
+      created_at: string;
+      updated_at: string;
+    },
+  ];
+
   // 全ての本の情報を取得
   useEffect(() => {
-    axios.get("http://localhost:8000/books").then((response) => {
+    axios.get<Books>("http://localhost:8000/books").then((response) => {
       console.log(response);
       console.log("処理をとおりました");
     });
-  });
+  }, []);
 
   const formChange = (e: any) => {
     setPost(e.target.value);
-    console.log(post);
   };
 
   const handleSubmit = (e: any) => {
@@ -35,7 +48,6 @@ function App() {
           type="text"
           placeholder="What needs to be done?"
           onChange={formChange}
-          // onSubmit={(e: React.KeyboardEvent<HTMLInputElement>) => setPost(e)}
         />
         <button type="submit">submit</button>
       </form>
