@@ -36,8 +36,9 @@ function App() {
   };
 
   const handleSubmit = (e: any) => {
-    e.preventDefalut();
-    console.log("handleSubmitが押されました。");
+    e.preventDefault();
+    console.log(post);
+    setPost("");
   };
 
   return (
@@ -48,8 +49,9 @@ function App() {
           type="text"
           placeholder="What needs to be done?"
           onChange={formChange}
+          value={post}
         />
-        <button type="submit">submit</button>
+        <Button>submit</Button>
       </form>
     </div>
   );
