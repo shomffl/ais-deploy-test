@@ -30,6 +30,12 @@ $ docker-compose exec app poetry run python -m api.migrate_db
 ```
 
 
+### doc2vecのテスト動作
+```
+$ docker-compose exec app poetry run python doc2vec/index.py
+```
+
+
 
 
 
