@@ -3,6 +3,9 @@ import "./App.css";
 import { Button } from "./Button";
 import axios from "axios";
 
+// headerのimport
+import { Header } from "./components/header";
+
 function App() {
   // Titileのstate管理
   const [title, setTitle] = useState<string>("");
@@ -96,6 +99,8 @@ function App() {
 
   return (
     <div className="container mx-auto">
+      {/* haederの表示 */}
+      <Header />
       {/* 新規投稿のフォーム */}
       <div className="border-2 border-purple-200 mt-8">
         <h1 className="text-center mt-4 text-green-400 ">新規投稿フォーム</h1>
