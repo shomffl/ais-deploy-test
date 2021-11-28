@@ -5,6 +5,9 @@ os.chdir('text')
 from janome.tokenizer import Tokenizer
 tokenaizer_instance = Tokenizer(wakati=True)
 
+from gensim.models.doc2vec import TaggedDocument
+from gensim.models.doc2vec import Doc2Vec
+
 
 ###
     #ニュースのファイル読み込み、リストに保存
@@ -14,11 +17,9 @@ news = []
 for file in glob('kaden-channel/*.txt'):
     with open(file,encoding="utf-8") as f:
         news.append(f.read())
-# print(news[0])
+
 l_kaden = len(news)
 # print('家電チャンネル記事数：',l_kaden)
-
-
 
 #スポーツウォッチ読み込み
 for file in glob('sports-watch/*.txt'):
@@ -36,22 +37,21 @@ for tes in news:
     # print(tes)
     text_wakati.append([token for token in tokenaizer_instance.tokenize(tes)])
 
-# print(text_wakati)
+
 ##
-    #学習用データ準備
+    #学習用データ準備 (TaggedDocumentメソッドに分かち書きしたデータリストとインデックス番号を渡す)
 ##
-from gensim.models.doc2vec import TaggedDocument
 cnt = 0
 doc_train = []
-for words in text_wakati:
-    doc_train.append(TaggedDocument(words,[cnt]))
+for words_in_article in text_wakati:
+    doc_train.append(TaggedDocument(words_in_article,[cnt]))
     cnt += 1
 
-print(len(doc_train))
+print(f'学習データ数{len(doc_train)}')
+
 ##
     #モデル作成
 ##
-from gensim.models.doc2vec import Doc2Vec
 model = Doc2Vec(doc_train,dm=1, vector_size=200, min_count=10, epochs=20)
 
 
@@ -59,12 +59,12 @@ model = Doc2Vec(doc_train,dm=1, vector_size=200, min_count=10, epochs=20)
     #評価
 ##
 index = 1500
+print(news[index])
 sims = model.docvecs.most_similar(index)
 print(sims)
 
-# print(news[index],'\n')
 # print(doc_train[index])
 
-for i in (sims):
-    print(news[i[0]],'\n')
+# for i in (sims):
+#     print(news[i[0]],'\n')
 
