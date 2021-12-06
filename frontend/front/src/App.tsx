@@ -5,6 +5,7 @@ import axios from "axios";
 
 // headerのimport
 import { Header } from "./components/header";
+import { RankingTable } from "./components/rankingTable";
 
 function App() {
   // Titileのstate管理
@@ -62,10 +63,11 @@ function App() {
       })
       .then((response) => {
         console.log(response);
+        console.log("本の詳細のresponseを受け取りました");
         console.log(response.data);
         setBooks(response.data);
       })
-      .then(() => {
+      .finally(() => {
         console.log("本の詳細の取得の処理を通過しました。");
         console.log(books);
         setBooknum("");

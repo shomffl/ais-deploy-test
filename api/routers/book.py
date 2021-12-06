@@ -42,7 +42,7 @@ def create_book():
 def show_book(book_id):
     # 書籍詳細
     return schemas_book.Book(
-        id=1, 
+        id=1,
         book_collection_number="所蔵番号",
         book_unique_number = "書誌番号",
         title = "タイトル",
