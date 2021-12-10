@@ -5,7 +5,8 @@ type styleProps = {
   recommendStyle: string;
 };
 
-export const RecommendButton: VFC<styleProps> = memo((recommendStyle) => {
+export const RecommendButton: VFC<styleProps> = memo((props) => {
+  const { recommendStyle } = props;
   const history = useHistory();
   const RecommendPath = () => {
     history.push("/recommend");
@@ -13,13 +14,12 @@ export const RecommendButton: VFC<styleProps> = memo((recommendStyle) => {
 
   const style = recommendStyle;
   console.log(recommendStyle);
-  console.log(style);
 
   return (
-    //
+    // headerを使う際に呼び出すrecommendのボタンの作成
     <button
       onClick={RecommendPath}
-      className={`text-2xl ${recommendStyle.recommendStyle}`}
+      className={`text-2xl text-bold pr-8 hover:text-3xl ${recommendStyle}`}
     >
       Recommend
     </button>
