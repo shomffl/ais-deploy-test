@@ -9,6 +9,16 @@ export const Recommend: VFC = memo(() => {
         infoStyle="text-white"
         isTop={false}
       />
+      <div className="w-full">
+        <p className="text-right pt-16 mr-64 text-white text-6xl font-thin italic">
+          Today's News
+          <br />
+          ×
+          <br />
+          Recommended Books
+        </p>
+      </div>
+      
     </div>
   );
 });
