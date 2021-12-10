@@ -1,7 +1,17 @@
 import { memo, VFC } from "react";
 
-export const Button: VFC = memo(({ children }) => {
-  <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-    {children}
-  </button>;
+type ChildProps = {
+  children: string;
+  RedirectPath: () => void;
+};
+
+export const Button: VFC<ChildProps> = memo(({ children, RedirectPath }) => {
+  return (
+    <button
+      onClick={RedirectPath}
+      className="bg-transparent border-2 border-white-200 hover:bg-white hover:text-red-500 text-white font-bold py-5 px-12 rounded-full"
+    >
+      {children}
+    </button>
+  );
 });

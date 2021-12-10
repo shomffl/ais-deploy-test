@@ -1,20 +1,21 @@
-import { memo, VFC } from "react";
+import { memo, useCallback, VFC } from "react";
+import { useHistory } from "react-router-dom";
 
 import Image from "../Image/404.png";
+import { Button } from "../atom/Button";
 
 export const ErrorPage: VFC = memo(() => {
+  const history = useHistory();
+  const BackToTop = useCallback(() => history.push("/"), [history]);
   return (
-    <div className=" h-screen bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 w-full">
-      <div className="flex pt-32">
-        {/* <div className="text-center">4</div> */}
-        <img src={Image} alt="404image" className="mx-auto animate-bounce" />
-        {/* <div className="">4</div> */}
-      </div>
-      <p className="font-bold text-center text-4xl text-gray-400 pt-10 animate-bounce">
-        ここは404ページが表示されるページになっておりますよ
-      </p>
-
-      <button className="">Back to top</button>
+    <div className=" h-screen bg-gradient-to-br from-red-200 to-red-600 w-full text-center animate-fade-in-down">
+      <p className="text-8xl  pt-16 italic text-white">Page Not found !!</p>
+      <img
+        src={Image}
+        alt="404image"
+        className="mx-auto object-contain w-1/2 pt-32 animate-bounce"
+      />
+      <Button RedirectPath={BackToTop}>Back to Top</Button>
     </div>
   );
 });
