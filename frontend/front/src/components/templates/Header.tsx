@@ -16,7 +16,7 @@ export const Header: VFC<HeaderProps> = memo((props) => {
   const { recommendStyle, infoStyle, isTop } = props;
 
   return (
-    <div className="flex h-20 animate-fade-in-up">
+    <div className="flex h-20 animate-fade-in-up ">
       <div className="justify-start w-3/4 pl-16">
         {isTop && (
           <img src={Logo} alt="logo" className="h-20 animate-fade-in-up" />
