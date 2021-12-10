@@ -6,7 +6,11 @@ import TopImage from "../Image/TopImage.png";
 export const Top: VFC = memo(() => {
   return (
     <div className="h-screen w-full bg-gray-300">
-      <Header recommendStyle="text-blue-500" infoStyle="text-blue-500" />
+      <Header
+        recommendStyle="text-blue-500"
+        infoStyle="text-blue-500"
+        isTop={true}
+      />
       <div className="flex">
         <div className="w-7/12">
           <img
