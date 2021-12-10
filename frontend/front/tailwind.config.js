@@ -1,3 +1,4 @@
+const colors = require("tailwindcss/colors");
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: false, // or 'media' or 'class'
@@ -51,6 +52,21 @@ module.exports = {
         "fade-in-up": "fade-in-up 0.5s ease-out",
         "fade-out-up": "fade-out-up 0.5s ease-out",
       },
+    },
+    colors: {
+      transparent: "transparent",
+      current: "currentColor",
+      black: colors.black,
+      white: colors.white,
+      gray: colors.gray,
+      emerald: colors.emerald,
+      indigo: colors.indigo,
+      yellow: colors.yellow,
+      gray: colors.slate,
+      green: colors.emerald,
+      purple: colors.violet,
+      yellow: colors.amber,
+      pink: colors.fuchsia,
     },
   },
   variants: {

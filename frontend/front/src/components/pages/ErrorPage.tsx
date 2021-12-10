@@ -8,7 +8,15 @@ export const ErrorPage: VFC = memo(() => {
   const history = useHistory();
   const BackToTop = useCallback(() => history.push("/"), [history]);
   return (
-    <div className=" h-screen bg-gradient-to-br from-red-200 to-red-600 w-full text-center animate-fade-in-down">
+    <div
+      className="h-screen 
+                 bg-gradient-to-br 
+                 from-red-200 
+                 to-red-600 
+                 w-full 
+                 text-center 
+                 animate-fade-in-up"
+    >
       <p className="text-8xl  pt-16 italic text-white">Page Not found !!</p>
       <img
         src={Image}
