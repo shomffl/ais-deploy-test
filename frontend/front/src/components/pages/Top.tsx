@@ -5,7 +5,7 @@ import TopImage from "../Image/TopImage.png";
 
 export const Top: VFC = memo(() => {
   return (
-    <div className="h-screen w-full bg-gray-300">
+    <div className="h-full w-full bg-gray-300">
       <Header
         recommendStyle="text-blue-500"
         infoStyle="text-blue-500"

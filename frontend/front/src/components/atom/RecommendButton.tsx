@@ -12,9 +12,6 @@ export const RecommendButton: VFC<styleProps> = memo((props) => {
     history.push("/recommend");
   };
 
-  const style = recommendStyle;
-  console.log(recommendStyle);
-
   return (
     // headerを使う際に呼び出すrecommendのボタンの作成
     <button
