@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { memo, VFC } from "react";
 import { ModalButton } from "../atom/ModalButton";
-import { BookModal } from "../pages/BookModal";
+import { BookModal } from "./BookModal";
 
 export const NewsCard: VFC = memo(() => {
   const [showModal, setShowModal] = useState(false);
