@@ -15,9 +15,8 @@ from optparse import OptionParser
 import MeCab
 import json
 
-import schemas.news_book as schemas_news_book
 
-
+# @TODO: 全てreturn値や引数の型定義する
 def predict_similar_book_by_news(news):
   # 準備
   model = Doc2Vec.load("d2v_ipsj_desc_0.model")
@@ -61,7 +60,7 @@ def parse_text(text, mecab_tag):
     return lexemes
 
 # Get explanation from JSON text (out of Doc2Vec model)
-def get_explanation(nominate) -> schemas_news_book.Book:
+def get_explanation(nominate):
   print(nominate)
   word = nominate[0]
   similarity = nominate[1]
