@@ -1,0 +1,590 @@
+<html>
+<head>
+<meta charset="UTF-8">
+
+<!-- semantic.css  -->
+ 
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+ 
+<!-- semantic.js  -->
+ 
+
+<!--<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">-->
+<link rel="stylesheet" href="tabulator/dist/css/tabulator.css">
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+<!--
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+-->
+
+<!--<script src="semantic/dist/semantic.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+<script type="text/javascript" src="tabulator/dist/js/tabulator.js"></script>
+
+<!--
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+-->
+<style type="text/css">
+<!--
+body
+  font-family: 'Open Sans'
+  background: url('https://subtlepatterns.com/patterns/halftone.png')
+//-->
+</style>
+<script type="text/javascript">
+$.fn.api.settings.api = {
+  'get followers' : '/followers/{id}?results={count}',
+  'create user'   : '/create',
+  'add user'      : '/add/{id}',
+  // 'search2'       : '/search/{positive_words}',
+  'search'        : '/search_words?positive_words={positive_words}&negative_words={negative_words}&' +
+                    'output_types={output_types}&' +
+                    'model_type={model_type}',
+  'newpaper'      : '/newpaper/{query}',
+};
+
+var myChart = null;
+
+function put_graph(result, chart_id){
+   var ctx = document.getElementById(chart_id).getContext('2d');
+   if(myChart!=null){
+       myChart.destroy();
+   }
+   myChart = new Chart(ctx, {
+     type: 'bar',
+     data: {
+       labels: result["label"],
+       datasets: [{
+         label: 'data',
+         data: result["data"],
+         backgroundColor: "rgba(153,255,51,0.6)"
+       }]
+     },
+     options: {
+         title: {
+             display: true,
+             text: result["message"]
+         },
+         legend: {
+             display: false
+         }
+     }
+   });
+}
+
+function put_message(result, message_id){
+   var jq_message_id = "#" + message_id;
+   var messages = result["message"];
+   var message_html = "";
+   
+   message_html +=
+     '<div class="ui message">' +
+     '  <div class="header">' +
+     messages[0] +
+     '  </div>'
+   if(messages.length > 1){
+     message_html += '<ul class="list">'
+     for(let i = 1; i < messages.length; i++){
+       message_html += '<li>' + messages[i] + '</li>';
+     }
+     message_html += '</ul>';
+   }
+   message_html += '</dev>';
+   $(jq_message_id).html(message_html);
+}
+
+function put_table(result, chart_id){
+   var jq_chart_id = "#" + chart_id;
+   var resultData = [];
+   var data_len = result["label"].length;
+   for(let i = 0; i < data_len; i++) {
+     var current_exp = result["description"][i];
+     if(result["description"][i].length > 0){
+       current_exp = result["title"][i];
+     }
+     console.log(result["title"][i])
+     console.log(current_exp)
+     resultData[i] = { id: i+1, signame: current_exp, correlation: result["data"][i] };
+   }
+   
+   $(jq_chart_id).tabulator("setData", resultData);
+}
+
+function put_list(result, list_id){
+   var jq_list_id = "#" + list_id;
+   var resultData = [];
+   var data_len = result.length;
+   var html_buf = "";
+
+   for(let i = 0; i < data_len; i++) {
+     var header = result[i]["title"];
+     var ipsj_href = get_href(result[i]["label"]);
+     var search_again_href = get_search_again_href(result[i]["label"]);
+     var description = result[i]["description"];
+     if(!description || description.length == 0){
+       description = "No description."
+     }
+     var similarity = result[i]["similarity"];
+     var icon_name = get_icon_name(result[i]["label"]);
+     html_buf += set_item_html(header, description, similarity, ipsj_href, search_again_href, icon_name);
+   }
+   
+   $(jq_list_id).html(html_buf);
+}
+
+function put_list_old(result, list_id){
+   var jq_list_id = "#" + list_id;
+   var resultData = [];
+   console.log(result)
+   var data_len = result["label"].length;
+   var html_buf = "";
+
+   for(let i = 0; i < data_len; i++) {
+     var header = result["title"][i];
+     var ipsj_href = get_href(result["label"][i]);
+     var search_again_href = get_search_again_href(result["label"][i]);
+     var description = result["description"][i];
+     if(!description || description.length == 0){
+       description = "No description."
+     }
+     var similarity = result["similarity"][i];
+     var icon_name = get_icon_name(result["label"][i]);
+     html_buf += set_item_html(header, description, similarity, ipsj_href, search_again_href, icon_name);
+   }
+   
+   $(jq_list_id).html(html_buf);
+}
+
+function get_href(label_id){
+  var href_base = "https://ipsj.ixsq.nii.ac.jp/ej/?action=pages_view_main"; 
+  if(label_id.substr(0,3) == "ID:"){
+    href_base += "&item_no=1&page_id=13&block_id=8";
+    href_base += "&active_action=repository_view_main_item_detail&item_id=" + label_id.substr(3);
+  } else {
+    var offset = label_id.indexOf(":");
+    href_base += "&count=20&order=0&pn=1&st=1&page_id=13&block_id=8";
+    href_base += "&active_action=repository_view_main_item_snippet&all=" + label_id.substr(offset + 1);
+  }
+  return(href_base);
+}
+
+function get_search_again_href(label_id){
+  search_href = '/search?' +
+                'positive_words=' + label_id + '&' +
+                'negative_words=&' +
+                'output_types=' + get_output_types() + '&' +
+                'model_type=' + get_model_type();
+  console.log(search_href);
+  return(search_href);
+}
+
+
+function get_icon_name(label_id){
+  var icon_name = "map marker icon"; 
+  if(label_id.substr(0,2) == "P:"){
+    icon_name = "user icon";
+  } else if(label_id.substr(0,2) == "O:"){
+    icon_name = "building icon";
+  } else if(label_id.substr(0,3) == "ID:"){
+    icon_name = "book icon";
+  } else if(label_id.substr(0,2) == "Y:" || label_id.substr(0,2) == "M:"){
+    icon_name = "calendar icon";
+  }
+  return(icon_name);
+}
+
+function get_output_types(){
+  var output_types = ['article', 'author', 'org', 'sig', 'sig_year', 'year', 'year_month'];
+  var current_output = []
+  types_len = output_types.length;
+  for(let i = 0; i < types_len; i++) {
+    tag_id = "#output_" + output_types[i];
+    if($(tag_id).find('input').is(':checked')){
+      console.log(tag_id + " is checked");
+      current_output.push(output_types[i]);
+    }
+  }
+  return(current_output.join(" "));
+}
+
+function get_model_type(){
+  var model_types = ['dm', 'dbow'];
+  types_len = model_types.length;
+  for(let i = 0; i < types_len; i++) {
+    tag_id = "#model_" + model_types[i];
+    if($(tag_id).find('input').is(':checked')){
+      console.log(tag_id + " is checked");
+      return(model_types[i]);
+    }
+  }
+  console.log("Error: radio button problem")
+  return(null);
+}
+
+function set_item_html(header, explanation, similarity, ipsj_href, search_again_href, icon_name){
+  var list_html = 
+   '<div class="item">' +
+      '<i class="' + icon_name + '"></i>' +
+      '<div class="content">' +
+        '<a class="header" href="' + search_again_href + '" >' + header + '</a>' +
+        '類似度： ' + String(similarity.toFixed(4) ) + "&nbsp;&nbsp;&nbsp;" +
+        '<a href="' + ipsj_href + '" target="_blank">電子図書館ページ</a>' +
+        '<div class="description">' + explanation + '</div>' +
+      '</div>' +
+   '</div>';
+  return list_html;
+}
+
+
+$(function(){
+  $('.top.menu .item').tab();
+  $('.ui.dropdown')
+    .dropdown()
+  ;
+  $('#searchbutton')
+    .api({
+      action: 'search',
+      urlData: {
+        positive_words: function (){
+          return encodeURIComponent($("#positive_words").val());
+        },
+        negative_words: function (){
+          return encodeURIComponent($("#negative_words").val());
+        },
+        output_types: function (){
+          return get_output_types();
+        },
+        model_type: function (){
+          return get_model_type();
+        }
+      },
+      onSuccess: function(response) {
+        console.log("OK");
+        console.log(response);
+        // put_graph(response, 'resultChart');
+        // put_table(response, 'result-table');
+        put_message(response, 'message-area');
+        put_list(response, 'result-list');
+      },
+      onFailure: function(response) {
+        console.log("NG");
+        console.log(response);
+      }
+    })
+  ;
+  $('#newpaperbutton')
+    .api({
+      action: 'newpaper',
+      urlData: {
+        kind: 'newpaper',
+        query: function (){
+          return $("#newpaper_data").val();
+        }
+      },
+      onSuccess: function(response) {
+        console.log("OK");
+        console.log(response);
+        // put_graph(response, 'paper-chart');
+        // put_table(response, 'paper-table');
+        put_list(response, 'paper-list');
+      },
+      onFailure: function(response) {
+        console.log("NG");
+        console.log(response);
+      }
+    })
+  ;
+  if($("#positive_words").val().length > 0 || $("#negative_words").val().length > 0){
+    var search_url = location.href.replace("search", "search_words");
+    console.log(search_url);
+    $.ajax({
+        type: "GET",
+        url: search_url,
+        success: function (data) {
+            result = JSON.parse(data);
+            put_list(result, 'result-list');
+        }
+    });
+  }
+});
+</script>
+</head>
+<body>
+
+<div class="ui grid stackable page">
+<div class="column">
+  <h2 class="ui header">
+    <i class="find icon"></i>
+    <div class="content">
+      Ipsj2Vec
+      <div class="sub header">Doc2Vecを使用した情報処理学会コンテンツのサーチエンジン</div>
+    </div>
+  </h2>
+  
+  
+  <div class="ui form">
+    <div class="two fields">
+      <div class="field">
+        <label><i class="search icon"></i>&nbsp;類似情報: 単語/著者/組織/西暦 etc.</label>
+        <div class="ui action input">
+          <input type="text" id="positive_words" value="___positive_words___">
+        </div>
+      </div>
+      <div class="field">
+        <label><i class="search icon"></i>&nbsp;相違情報: 単語/著者/組織/西暦 etc.</label>
+        <div class="ui action input">
+          <input type="text" id="negative_words" value="___negative_words___">
+        </div>
+      </div>
+    </div>
+
+    <div class="inline fields">
+      <label for="input_type">入力:</label>
+      <div class="inline field">
+        <div id="input_outline" class="ui checkbox">
+          <input type="checkbox" tabindex="0" ___in_outline_checked___>
+          <label>論文/報告/記事,&nbsp;&nbsp;</label>
+        </div>
+        <div id="input_keyword" class="ui checkbox">
+          <input type="checkbox" tabindex="0" ___in_keyword_checked___>
+          <label>キーワード/著者/組織/研究会/西暦&nbsp;&nbsp;</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="inline fields">
+      <label for="output_type">検索対象:</label>
+      <div class="inline field">
+        <div id="output_article" class="ui checkbox">
+          <input type="checkbox" tabindex="0" ___article_checked___>
+          <label>論文/報告/記事,&nbsp;&nbsp;</label>
+        </div>
+        <div id="output_author" class="ui checkbox">
+          <input type="checkbox" tabindex="0" ___author_checked___>
+          <label>著者,&nbsp;&nbsp;</label>
+        </div>
+        <div id="output_org" class="ui checkbox">
+          <input type="checkbox" tabindex="0" ___org_checked___>
+          <label>組織,&nbsp;&nbsp;</label>
+        </div>
+        <div id="output_sig" class="ui checkbox">
+          <input type="checkbox" tabindex="0" ___sig_checked___>
+          <label>研究会,&nbsp;&nbsp;</label>
+        </div>
+        <!--<div id="output_sig_year" class="ui checkbox">
+          <input type="checkbox" tabindex="3">
+          <label>研究会＋年,&nbsp;&nbsp;</label>
+        </div>-->
+        <div id="output_year" class="ui checkbox">
+          <input type="checkbox" tabindex="0" ___year_checked___>
+          <label>年,&nbsp;&nbsp;</label>
+        </div>
+        <!--<div id="output_year_month" class="ui checkbox">
+          <input type="checkbox" tabindex="5">
+          <label>年＋月</label>
+        </div>-->
+      </div>
+      <label for="d2v_model">Doc2Vecモデル:</label>
+      <div class="inline field">
+        <div id="model_dm" class="ui radio checkbox">
+          <input type="radio" name="d2v_model" tabindex="0" ___model_dm_checked___>
+          <label>PV-DM,&nbsp;&nbsp;</label>
+        </div>
+        <div id="model_dbow" class="ui radio checkbox">
+          <input type="radio" name="d2v_model" tabindex="0" ___model_dbow_checked___>
+          <label>PV-DBOW</label>
+        </div>
+      </div>
+    </div>
+    <button class="ui huge button" id="searchbutton">IPSJを検索</button>
+    <!--<input id="searchbutton" type="submit" value="IPSJを検索" class="ui huge button"/>-->
+  </div>
+  
+  <div class="ui divider"></div>
+  
+  <div id="message-area"></div>
+  <div id="result-list" class="ui list"></div>
+
+
+<!--
+
+  <div class="ui segment">
+    <div class="ui menu top">
+      <a class="active item" data-tab="search">Search</a>
+      <a class="item" data-tab="edit"><i class="icon edit sign"></i>Edit</a>
+      <a class="item" data-tab="SIG">SIG</a>
+      <a class="item" data-tab="summary">Summary</a>
+      <a class="item" data-tab="newpaper">New Paper</a>
+    </div>
+    
+    <div class="ui tab" data-tab="search">
+      <canvas id="resultChart" width="400" height="200"></canvas>
+      <div id="result-list" class="ui list"></div>
+      <div id="result-table"></div>
+      <script type="text/javascript">
+         $("#result-table").tabulator({
+           fitColumns:true,
+           columns:[
+             {title:"#", field:"id", width:"5%"},
+             {title:"SIG", field:"signame", sortable:false, width:"80%"},
+             {title:"Correlation", field:"correlation", sortable:false, sorter:"number", width:"15%"},
+           ],
+         });
+      </script>
+      
+    </div>
+
+    <div class="ui tab" data-tab="newpaper">
+      <div class="ui form">
+        <div class="field">
+          <label>Paper Abstract</label>
+          <div class="ui action input">
+            <textarea id="newpaper_data"></textarea>
+            <button class="ui button" id="newpaperbutton">Submit</button>
+          </div>
+        </div>
+      </div>
+      <canvas id="paper-chart" width="400" height="200"></canvas>
+      <div id="paper-table"></div>
+      <script type="text/javascript">
+         $("#paper-table").tabulator({
+           fitColumns:true,
+           columns:[
+             {title:"#", field:"id", width:40},
+             {title:"Name", field:"signame", sortable:true},
+             {title:"Similarity", field:"correlation", sortable:true, sorter:"number"},
+           ],
+         });
+      </script>
+      <div id="paper-list" class="ui list"></div
+    </div>
+    
+    
+    <div class="ui tab" data-tab="edit">
+      <div class="ui form">
+        <div class="two fields">
+          <div class="field"><label>First Name</label><input type="text" /></div>
+            <div class="field"><label>Last Name</label><input type="text" /></div>
+         </div>
+      </div>
+    </div>
+    
+    <div class="ui tab" data-tab="SIG">
+      <div class="ui form">
+		  <div class="inline fields">
+		    <label>Select SIGs to analyze</label>
+		    <div class="field">
+		      <div class="ui checkbox">
+		        <input type="checkbox" name="SIGSE">
+		        <label>SIGSE</label>
+		      </div>
+		    </div>
+		    <div class="field">
+		      <div class="ui checkbox">
+		        <input type="checkbox" name="SIGIS">
+		        <label>SIGIS</label>
+		      </div>
+		    </div>
+         </div>
+      </div>
+      <canvas id="myChart" width="400" height="400"></canvas>
+		<script>
+			var ctx = document.getElementById('myChart').getContext('2d');
+			var myChart = new Chart(ctx, {
+			  type: 'line',
+			  data: {
+			    labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+			    datasets: [{
+			      label: 'apples',
+			      data: [12, 19, 3, 17, 6, 3, 7],
+			      backgroundColor: "rgba(153,255,51,0.4)"
+			    }, {
+			      label: 'oranges',
+			      data: [2, 29, 5, 5, 2, 3, 10],
+			      backgroundColor: "rgba(255,153,0,0.4)"
+			    }]
+			  }
+			});
+		</script>
+    </div>
+    
+    <div class="ui tab" data-tab="summary">
+      Other content
+		<div class="ui two column grid">
+
+		  <div class="column">
+		    <h1 class="ui header">H1</h1>
+		    <h2 class="ui header">H2</h2>
+		    <h3 class="ui header">H3</h3>
+		    <h4 class="ui header">H4</h4>
+		    <h5 class="ui header">H5</h5>
+
+		    <div class="ui icon header">
+		<i class="settings icon"></i>
+		<div class="content">
+		  Icon Header
+		  <div class="sub header">Sub-header</div>
+		</div>
+		    </div>
+
+		    <div class="ui header">
+		<i class="settings icon"></i>
+		<div class="content">
+		  Header
+		  <div class="sub header">Sub-header</div>
+		</div>
+		    </div>
+		  </div>
+		  <div class="column">
+		    <div class="ui block header">
+		<i class="settings icon"></i>
+		<div class="content">
+		  Block
+		  <div class="sub header">Sub-header</div>
+		</div>
+		    </div>
+
+		    <div class="ui dividing header">
+		<i class="settings icon"></i>
+		<div class="content">
+		  Dividing
+		  <div class="sub header">Sub-header</div>
+		</div>
+		    </div>
+
+		    <div class="ui teal dividing header">
+		<i class="settings icon"></i>
+		<div class="content">
+		  Color
+		  <div class="sub header">Sub-header</div>
+		</div>
+		    </div>
+
+		    <div class="ui top attached header">Attached</div>
+		    <div class="ui attached segment"></div>
+		    <div class="ui bottom attached header">Attached</div>
+		  </div>
+		</div>
+    </div>
+  </div>
+-->
+</div>
+</div>
+
+</body>
+</html>
