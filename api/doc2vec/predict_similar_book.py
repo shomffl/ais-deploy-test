@@ -15,11 +15,13 @@ from optparse import OptionParser
 import MeCab
 import json
 
+import schemas.news_book as schemas_news_book
+
+
 def predict_similar_book_by_news(news):
   # 準備
   model = Doc2Vec.load("d2v_ipsj_desc_0.model")
   mt = MeCab.Tagger('mecab-ipadic-neologd')
-  
 
   lexemes = parse_text(news, mt)
   print(lexemes)
@@ -28,15 +30,14 @@ def predict_similar_book_by_news(news):
   # 単語なら不要、今まで出てきた単語の範囲で新しい文章のベクトルを予測する
   vector = model.infer_vector(lexemes, alpha=0.1, min_alpha=0.0001, steps=10)  # 
 
-  # positiveはニュースのコサイン類似度が高い16個出して、そのコサイン類似度の高い本を出力する
+  # positiveはニュースのコサイン類似度が高い1個出して、そのコサイン類似度の高い本を出力する
   nominates = model.docvecs.most_similar(positive=[vector], topn=1)
-  print(nominates)
 
   for nominate in nominates:
     explanation = get_explanation(nominate)
-    print(explanation)
-  quit()
-  
+
+  print(explanation)
+  return explanation
   
 
 def parse_text(text, mecab_tag):
@@ -60,21 +61,23 @@ def parse_text(text, mecab_tag):
     return lexemes
 
 # Get explanation from JSON text (out of Doc2Vec model)
-def get_explanation(nominate):
+def get_explanation(nominate) -> schemas_news_book.Book:
   print(nominate)
   word = nominate[0]
   similarity = nominate[1]
-  explanation = ""
+  # @TODO: ここはID以外も可能性があるのか確認する
   if(word[0:3] == "ID:"):
     json_file = "./json/id_" + word[3:] + ".json"
     #json_file = word[3:]
     with open(json_file, "r") as json_f:
       json_dict = json.load(json_f)
-    authors_str = json_dict["biblio_authors"]
-    title = json_dict["title"]
-    description = json_dict["description"][0:50]
-    explanation = "%f, %s, %s, %s" % (similarity, authors_str, title, description)
-  return explanation
+    explanation_dict = {
+      "title": json_dict["title"],
+      "author": json_dict["biblio_authors"],
+      "description": json_dict["description"][0:150],
+      "similarity": similarity
+    }
+  return explanation_dict
 
 
 
