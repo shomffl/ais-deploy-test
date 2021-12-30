@@ -3,3 +3,4 @@ __pycache__/
 *$py.class
 .env
 admin.json
+api/doc2vec/json

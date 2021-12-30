@@ -2,10 +2,7 @@ from typing import Any, List
 from fastapi import APIRouter, Depends
 from datetime import datetime
 
-
 import api.schemas.news_book as schemas_news_book
-
-
 
 router = APIRouter()
 

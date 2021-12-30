@@ -1,0 +1,82 @@
+#!/usr/bin/python
+# coding: UTF-8
+
+import random
+import gensim
+from gensim.models.doc2vec import Doc2Vec
+from gensim.models.doc2vec import TaggedDocument
+import sys
+import atexit
+import os
+import readline
+import re
+import shlex
+from optparse import OptionParser
+import MeCab
+import json
+
+def predict_similar_book_by_news(news):
+  # 準備
+  model = Doc2Vec.load("d2v_ipsj_desc_0.model")
+  mt = MeCab.Tagger('mecab-ipadic-neologd')
+  
+
+  lexemes = parse_text(news, mt)
+  print(lexemes)
+ 
+  # モデルを使うときではなく、新しい文章のベクトルを図るもの
+  # 単語なら不要、今まで出てきた単語の範囲で新しい文章のベクトルを予測する
+  vector = model.infer_vector(lexemes, alpha=0.1, min_alpha=0.0001, steps=10)  # 
+
+  # positiveはニュースのコサイン類似度が高い16個出して、そのコサイン類似度の高い本を出力する
+  nominates = model.docvecs.most_similar(positive=[vector], topn=1)
+  print(nominates)
+
+  for nominate in nominates:
+    explanation = get_explanation(nominate)
+    print(explanation)
+  quit()
+  
+  
+
+def parse_text(text, mecab_tag):
+    lexemes = []
+    text = text.replace("　", " ")
+    for line in mecab_tag.parse(text).split("\n"):
+        # print(line)
+        if line == "EOS" or line == "":
+            continue
+        words = re.split(r"[,\t]", line)
+        #print(words)
+        # 助詞が重要ではない
+        if words[2] == "サ変接続" and words[7] == "*":
+            pass # print("zz " + line)
+        elif words[2] == "記号" or words[1] == "記号":
+            pass
+        elif words[1] == "助詞":
+            pass
+        else:
+            lexemes.append(words[0])
+    return lexemes
+
+# Get explanation from JSON text (out of Doc2Vec model)
+def get_explanation(nominate):
+  print(nominate)
+  word = nominate[0]
+  similarity = nominate[1]
+  explanation = ""
+  if(word[0:3] == "ID:"):
+    json_file = "./json/id_" + word[3:] + ".json"
+    #json_file = word[3:]
+    with open(json_file, "r") as json_f:
+      json_dict = json.load(json_f)
+    authors_str = json_dict["biblio_authors"]
+    title = json_dict["title"]
+    description = json_dict["description"][0:50]
+    explanation = "%f, %s, %s, %s" % (similarity, authors_str, title, description)
+  return explanation
+
+
+
+tt = "消される天安門事件の記憶。香港の大学、親中派が圧力。香港の大学で、民主化を求める学生らが北京で武力弾圧された1989年の天安門事件"
+predict_similar_book_by_news(tt)
