@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 from api.routers import book
+from api.routers import news_book
 
 
 app = FastAPI()
@@ -22,3 +23,4 @@ app.add_middleware(
 
 
 app.include_router(book.router)
+app.include_router(news_book.router)
