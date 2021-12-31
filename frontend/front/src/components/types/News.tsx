@@ -1,5 +1,6 @@
-export type News = {
+export type NewsType = {
   title: string;
-  summary: Text;
-  link: string;
+  summary: string;
+  url: string;
+  crawled_at: string;
 };

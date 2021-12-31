@@ -2,8 +2,9 @@ import { useState } from "react";
 import { memo, VFC } from "react";
 import { ModalButton } from "../atom/ModalButton";
 import { BookModal } from "./BookModal";
+import { ResponseType } from "../types/Response";
 
-export const NewsCard: VFC = memo(() => {
+export const NewsCard: VFC<{ response: Response }> = memo(({ response }) => {
   const [showModal, setShowModal] = useState(false);
   const setModal = () => {
     setShowModal(!showModal);
@@ -27,7 +28,9 @@ export const NewsCard: VFC = memo(() => {
         </svg>
       </div>
       <div className="text-center mt-4">
-        <h1 className="font-bold text-gray-700 text-4xl text">News Title</h1>
+        <h1 className="font-bold text-gray-700 text-4xl text">
+          {response.book.title}
+        </h1>
         <p className="text-500 text-sm text-lg mt-4">
           news content palace. news content palace.news content palace.news
           content palace.
