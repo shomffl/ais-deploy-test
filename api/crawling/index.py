@@ -1,15 +1,12 @@
 import os
-from crawling import CrawlingNews
-from convert_news_data import ConvertNewsData
+from api.crawling.crawling import CrawlingNews
+from api.crawling.convert_news_data import ConvertNewsData
 import datetime
 import json
 import glob
-
-
+ 
 # ニュース記事のRSSのURL
 URL = "https://www.news24.jp/rss/index.rdf"
-
-
 
 def crawl_news_data():
     # ニュースデータのクローリング
@@ -31,26 +28,21 @@ def convert_news_to_json(news_list):
 
 
 
-def fetch_updated_news_data_by_json(number):
+def fetch_updated_news_data_by_json(limit):
     news_array = []
-    sorted_files = sorted(glob.glob('news_files/*.json'), key=lambda f: os.stat(f).st_mtime, reverse=True) #最新順にリスト
+    # print(glob.glob('api/crawling/news_files/*.json'))
+    sorted_files = sorted(glob.glob('api/crawling/news_files/*.json'), key=lambda f: os.stat(f).st_mtime, reverse=True) #最新順にリスト
     crawled_at = sorted_files[0][16:-5] #＠TODO:S3からではファイル名変わるため修正（もしくはファイル名から取る必要なさそう）
     with open(sorted_files[0], "r") as json_file:
       json_dict = json.load(json_file)
-    for num in range(number):
+    for num in range(limit):
         news = json_dict["news" + str(num)]
-        # print(news)
         news_dict = {
             "title": news["title"],
             "summary": news["summary"],
             "url": news["link"],
             "crawled_at": crawled_at
         }
-        # print(news_dict)
         news_array.append(news_dict)
 
-    print(news_array)
-
-fetch_updated_news_data_by_json(5)
-
-# convert_news_to_json(crawl_news_data())
+    return news_array

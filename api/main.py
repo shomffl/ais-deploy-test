@@ -1,6 +1,6 @@
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 
 from api.routers import book
 from api.routers import news_book
@@ -24,3 +24,6 @@ app.add_middleware(
 
 app.include_router(book.router)
 app.include_router(news_book.router)
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
