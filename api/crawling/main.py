@@ -1,6 +1,6 @@
 import os
-from api.crawling.crawling import CrawlingNews
-from api.crawling.convert_news_data import ConvertNewsData
+from api.crawling.crawl import CrawlingNews
+from api.crawling.convert_to_json import ConvertNewsData
 import datetime
 import json
 import glob

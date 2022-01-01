@@ -2,7 +2,7 @@ from typing import Any, List
 from fastapi import APIRouter, Depends
 from datetime import datetime
 
-import api.crawling.index as crawling
+import api.crawling.main as crawling
 import api.doc2vec.predict_similar_book as doc2vec
 
 import api.schemas.news_book as schemas_news_book
