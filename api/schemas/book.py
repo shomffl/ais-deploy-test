@@ -7,8 +7,8 @@ class Book(BaseModel):
     author: str = Field(example="東城 久夫")
     description: str = Field(example="教師・家庭・地域・スクールカウンセラー連携でとりくむ学校づくり。学校臨床、その実践と可能性。")
     publisher: str = Field(example="新曜社")
-    location: str = Field(example="相1F一般300")
     published_year: str = Field(example="2002.12")
+    location: str = Field(example="相1F一般300")
     isbn: str = Field(example="478850829X")
     similarity: Optional[float] = Field(example=0.552038)
 

@@ -15,7 +15,6 @@ def get_news_and_similar_books(limit: int = 10):
     news_list = crawling.fetch_updated_news_data_by_json(limit)
     news_similar_books_array = []
     for news_dict in news_list:
-        print(news_dict)
         similar_book_dict = doc2vec.predict_similar_book_by_news(news_dict)
         news_similar_book = {
             "news": news_dict,

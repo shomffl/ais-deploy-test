@@ -73,6 +73,10 @@ def get_explanation(nominate):
       "title": json_dict["title"],
       "author": json_dict["biblio_authors"],
       "description": json_dict["description"][0:150],
+      "publisher": json_dict["biblio_publisher"][0:150],
+      "published_year": json_dict["biblio_year_published"][0:150],
+      "location": json_dict["biblio_location"][0:150],
+      "isbn": json_dict["identifier"][0:150],
       "similarity": similarity
     }
   return explanation_dict
