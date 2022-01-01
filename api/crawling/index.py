@@ -38,11 +38,14 @@ def fetch_updated_news_data_by_json(limit):
     for num in range(limit):
         news = json_dict["news" + str(num)]
         news_dict = {
-            "title": news["title"],
-            "summary": news["summary"],
+            "title": convert_full_width_to_half_width(news["title"]),
+            "summary": convert_full_width_to_half_width(news["summary"]),
             "url": news["link"],
             "crawled_at": crawled_at
         }
         news_array.append(news_dict)
 
     return news_array
+
+def convert_full_width_to_half_width(text):
+    return text.replace("　", " ")
