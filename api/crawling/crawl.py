@@ -2,7 +2,6 @@ import feedparser
 
 # ニュース記事のデータを取得するためのクラス
 class CrawlingNews:
-
     def __init__(self, rss_url):
         self.rss_url = rss_url
 
