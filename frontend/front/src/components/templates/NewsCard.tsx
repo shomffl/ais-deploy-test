@@ -3,8 +3,9 @@ import { memo, VFC } from "react";
 import { ModalButton } from "../atom/ModalButton";
 import { BookModal } from "./BookModal";
 import { ResponseType } from "../types/Response";
+import { Link } from "react-router-dom";
 
-export const NewsCard: VFC<{ response: ResponseType[] }> = memo(
+export const NewsCard: VFC<{ response: ResponseType }> = memo(
   ({ response }) => {
     const [showModal, setShowModal] = useState(false);
     const setModal = () => {
@@ -29,16 +30,24 @@ export const NewsCard: VFC<{ response: ResponseType[] }> = memo(
           </svg>
         </div>
         <div className="text-center mt-4">
-          <h1 className="font-bold text-gray-700 text-4xl text"></h1>
-          <p className="text-500 text-sm text-lg mt-4">
-            news content palace. news content palace.news content palace.news
-            content palace.
+          <h1 className="font-bold text-gray-700 text-4xl text">
+            {response.news.title}
+          </h1>
+          <p className="text-500 text-sm text-lg mt-4 mb-10">
+            {response.news.summary}
           </p>
-          <p className="pt-8">news site link</p>
+          <Link to={response.news.url} className="pt-16 text-blue-700 ">
+            ニュースはこちら
+          </Link>
+          <br />
           <ModalButton setModal={setModal} />
         </div>
         {/* modalの表示 */}
-        <BookModal showModal={showModal} setModal={setModal} />
+        <BookModal
+          showModal={showModal}
+          setModal={setModal}
+          response={response.book}
+        />
       </div>
     );
   },
