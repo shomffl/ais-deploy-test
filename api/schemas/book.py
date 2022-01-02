@@ -2,6 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
+
 class Book(BaseModel):
     title: str = Field(example="「日中摩擦」を検証する")
     author: str = Field(example="東城 久夫")
