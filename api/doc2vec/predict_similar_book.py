@@ -62,21 +62,6 @@ def parse_text(text, mecab_tag):
             lexemes.append(words[0])
     return lexemes
 
-
-# # ニュースのデータから 空白や、 「12/30 21:38更新」のような文字を取り除く
-# def replaceTextFromNewsText(text):
-#     # 全角空白を半角空白にする
-#     text = text.replace("　", " ")
-
-#     # 12/30 21:38更新」のような文字を取り除く
-#     regular_expression = r"\s\d+/+\d+\s\d+:\d+\w{2}"
-#     shouldReplaceText = re.search(regular_expression, text)
-#     if shouldReplaceText:
-#         text = re.sub(regular_expression, " ", text)
-
-#     return text
-
-
 # Get explanation from JSON text (out of Doc2Vec model)
 def get_explanation(nominate):
     print(nominate)
