@@ -31,7 +31,6 @@ def predict_similar_book_by_news(news):
     # モデルを使うときではなく、新しい文章のベクトルを図るもの
     # 単語なら不要、今まで出てきた単語の範囲で新しい文章のベクトルを予測する
     vector = model.infer_vector(lexemes, alpha=0.1, min_alpha=0.0001, steps=10)  #
-
     # positiveはニュースのコサイン類似度が高い1個出して、そのコサイン類似度の高い本を出力する
     nominates = model.docvecs.most_similar(positive=[vector], topn=1)
 

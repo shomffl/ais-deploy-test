@@ -39,12 +39,15 @@ $ docker-compose exec app poetry run python doc2vec/index.py
 
 [こちら](https://www.figma.com/file/H0VYuqLH1hPPNQjrWU2knl/AIS-inventory-product?node-id=0%3A1)からfigmaで、プロトタイプの確認を行なってください。
 
+<<<<<<< HEAD
+=======
 
 
 
 
 
 
+>>>>>>> main
 
 
 
