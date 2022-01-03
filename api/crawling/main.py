@@ -8,12 +8,14 @@ import glob
 # ニュース記事のRSSのURL
 URL = "https://www.news24.jp/rss/index.rdf"
 
+
 def crawl_news_data():
     # ニュースデータのクローリング
     news_data = CrawlingNews(URL)
     news_list = news_data.crawling()
 
     return news_list
+
 
 def convert_news_to_json(news_list):
     # 現在時刻をjsonファイルのファイル名にする
@@ -25,7 +27,6 @@ def convert_news_to_json(news_list):
     # ニュースデータのjsonファイルへの変換処理
     json_data = ConvertNewsData(news_list, file_path)
     json_data.convert()
-
 
 
 def fetch_updated_news_data_by_json(limit):
@@ -50,6 +51,7 @@ def fetch_updated_news_data_by_json(limit):
         news_array.append(news_dict)
 
     return news_array
+
 
 def convert_full_width_to_half_width(text):
     return text.replace("　", " ")
