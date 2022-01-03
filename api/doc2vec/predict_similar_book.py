@@ -14,6 +14,7 @@ import shlex
 from optparse import OptionParser
 import MeCab
 import json
+from api.utils.text import replaceTextFromNewsText, convert_full_width_to_half_width
 
 
 # @TODO: 全てreturn値や引数の型定義する
@@ -43,7 +44,7 @@ def predict_similar_book_by_news(news):
 def parse_text(text, mecab_tag):
     lexemes = []
 
-    text = replaceTextFromNewsText(text)
+    text = convert_full_width_to_half_width(text)
     print(text)
 
     for line in mecab_tag.parse(text).split("\n"):
@@ -60,21 +61,6 @@ def parse_text(text, mecab_tag):
         else:
             lexemes.append(words[0])
     return lexemes
-
-
-# ニュースのデータから 空白や、 「12/30 21:38更新」のような文字を取り除く
-def replaceTextFromNewsText(text):
-    # 全角空白を半角空白にする
-    text = text.replace("　", " ")
-
-    # 12/30 21:38更新」のような文字を取り除く
-    regular_expression = r"\s\d+/+\d+\s\d+:\d+\w{2}"
-    shouldReplaceText = re.search(regular_expression, text)
-    if shouldReplaceText:
-        text = re.sub(regular_expression, " ", text)
-
-    return text
-
 
 # Get explanation from JSON text (out of Doc2Vec model)
 def get_explanation(nominate):
