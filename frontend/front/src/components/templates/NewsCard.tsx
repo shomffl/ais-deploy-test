@@ -12,7 +12,7 @@ export const NewsCard: VFC<{ response: ResponseType }> = memo(
       setShowModal(!showModal);
     };
     return (
-      <div className="p-8 border border-gray-200 rounded bg-white w-96 hover:bg-gray-50 hover:border-b-4 hover:border-b-blue-500 mr-6 mb-6 animate-fade-in-down">
+      <div className="p-8 border border-gray-200 rounded bg-white w-96 hover:bg-gray-50 hover:border-b-4 hover:border-b-blue-500 mr-16 mb-6 animate-fade-in-down">
         <div className="flex justify-center items-center text-gray-500">
           <svg
             xmlns="http://www.w3.org/2000/svg"
