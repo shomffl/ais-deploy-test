@@ -14,7 +14,7 @@ import shlex
 from optparse import OptionParser
 import MeCab
 import json
-from api.utils.text import replaceTextFromNewsText
+from api.utils.text import replaceTextFromNewsText, convert_full_width_to_half_width
 
 
 # @TODO: 全てreturn値や引数の型定義する
@@ -44,7 +44,7 @@ def predict_similar_book_by_news(news):
 def parse_text(text, mecab_tag):
     lexemes = []
 
-    text = replaceTextFromNewsText(text)
+    text = convert_full_width_to_half_width(text)
     print(text)
 
     for line in mecab_tag.parse(text).split("\n"):

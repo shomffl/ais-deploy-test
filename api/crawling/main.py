@@ -4,7 +4,7 @@ from api.crawling.convert_to_json import ConvertNewsData
 import datetime
 import json
 import glob
-from api.utils.text import replaceTextFromNewsText
+from api.utils.text import replaceTextFromNewsText, convert_full_width_to_half_width
 
 # ニュース記事のRSSのURL
 URL = "https://www.news24.jp/rss/index.rdf"
@@ -54,5 +54,3 @@ def fetch_updated_news_data_by_json(limit):
     return news_array
 
 
-def convert_full_width_to_half_width(text):
-    return text.replace("　", " ")
