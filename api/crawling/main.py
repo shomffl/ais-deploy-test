@@ -4,6 +4,7 @@ from api.crawling.convert_to_json import ConvertNewsData
 import datetime
 import json
 import glob
+from api.utils.text import replaceTextFromNewsText
 
 # ニュース記事のRSSのURL
 URL = "https://www.news24.jp/rss/index.rdf"
@@ -43,7 +44,7 @@ def fetch_updated_news_data_by_json(limit):
     for num in range(limit):
         news = json_dict["news" + str(num)]
         news_dict = {
-            "title": convert_full_width_to_half_width(news["title"]),
+            "title": replaceTextFromNewsText(news["title"]),
             "summary": convert_full_width_to_half_width(news["summary"]),
             "url": news["link"],
             "crawled_at": crawled_at,
