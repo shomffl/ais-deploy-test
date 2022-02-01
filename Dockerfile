@@ -3,7 +3,9 @@ FROM python:3.9
 ENV PYTHONUNBUFFERED=1
 WORKDIR /src
 
+
 # mecabの導入
+# @see: https://github.com/spider-man-tm/docker-python-mecab-neologd-base/blob/main/Dockerfile
 RUN apt-get -y update && \
   apt-get -y upgrade && \
   apt-get install -y mecab && \
