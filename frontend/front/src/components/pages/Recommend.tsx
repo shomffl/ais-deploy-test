@@ -33,11 +33,11 @@ export const Recommend: VFC = memo(() => {
         console.log("ニュースの取得が終了しました。");
         setLoading(false);
       });
-  }, news);
+  }, []);
 
   useEffect(() => {
     console.log(news);
-  });
+  }, []);
 
   return (
     <>
@@ -58,9 +58,9 @@ export const Recommend: VFC = memo(() => {
           <div className="container mx-auto mt-16 flex flex-wrap">
             {news.map((res, num) => (
               // この中に繰り返し処理を記述する
-              <>
-                <NewsCard response={res} key={num} />
-              </>
+              <div key={num}>
+                <NewsCard response={res} />
+              </div>
             ))}
           </div>
         </div>
