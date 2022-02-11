@@ -12,7 +12,7 @@ export const NewsCard: VFC<{ response: ResponseType }> = memo(
       setShowModal(!showModal);
     };
     return (
-      <div className="p-8 border border-gray-200 rounded bg-white w-96 hover:bg-gray-50 hover:border-b-4 hover:border-b-blue-500 mr-16 mb-6 animate-fade-in-down">
+      <div className="p-8 border border-gray-200 rounded bg-white w-96 hover:bg-gray-50 hover:border-b-4 hover:border-b-blue-500 mr-8 mb-6 animate-fade-in-down">
         <div className="flex justify-center items-center text-gray-500">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -33,9 +33,7 @@ export const NewsCard: VFC<{ response: ResponseType }> = memo(
           <h1 className="font-bold text-gray-700 text-4xl text">
             {response.news.title}
           </h1>
-          <p className="text-500 text-sm text-lg mt-4 mb-10">
-            {response.news.summary}
-          </p>
+          <p className="text-500 text-sm mt-4 mb-10">{response.news.summary}</p>
           <Link to={response.news.url} className="pt-16 text-blue-700 ">
             ニュースはこちら
           </Link>
@@ -50,5 +48,5 @@ export const NewsCard: VFC<{ response: ResponseType }> = memo(
         />
       </div>
     );
-  },
+  }
 );

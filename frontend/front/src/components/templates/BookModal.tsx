@@ -23,7 +23,7 @@ export const BookModal: VFC<BookModalProps> = memo((props) => {
                 </div>
                 {/*body*/}
                 <div className="font-bold pt-8 text-red-500 text-center text-3xl">
-                  {response.similarity * 100}%マッチしています
+                  {Math.floor(response.similarity * 100)}%マッチしています
                 </div>
                 <div className="relative p-6 flex-auto">
                   <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
