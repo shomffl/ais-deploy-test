@@ -5,8 +5,6 @@ import { RecommendTitle } from "../atom/RecommendTitle";
 import { Header } from "../templates/Header";
 import { NewsCard } from "../templates/NewsCard";
 
-import { BookType } from "../types/Book";
-
 import { ResponseType } from "../types/Response";
 
 export const Recommend: VFC = memo(() => {
@@ -44,6 +42,12 @@ export const Recommend: VFC = memo(() => {
   return (
     <>
       {loading ? (
+        <div className="h-screen bg-gradient-to-br from-gray-700 via-gray-900 to-black">
+          <div className="pt-40 text-center animate-ping text-white text-size-lg">
+            loading...
+          </div>
+        </div>
+      ) : (
         <div className="w-full animate-fade-in-down h-full bg-gradient-to-br from-gray-700 via-gray-900 to-black">
           <Header
             recommendStyle="text-white"
@@ -58,12 +62,6 @@ export const Recommend: VFC = memo(() => {
                 <NewsCard response={res} key={num} />
               </>
             ))}
-          </div>
-        </div>
-      ) : (
-        <div className="h-screen bg-gradient-to-br from-gray-700 via-gray-900 to-black">
-          <div className="pt-40 text-center animate-ping text-white text-size-lg">
-            loading...
           </div>
         </div>
       )}
