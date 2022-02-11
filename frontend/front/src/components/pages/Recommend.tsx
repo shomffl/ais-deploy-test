@@ -4,6 +4,9 @@ import { memo, VFC, useState, useEffect } from "react";
 import { RecommendTitle } from "../atom/RecommendTitle";
 import { Header } from "../templates/Header";
 import { NewsCard } from "../templates/NewsCard";
+
+import { BookType } from "../types/Book";
+
 import { ResponseType } from "../types/Response";
 
 export const Recommend: VFC = memo(() => {
@@ -18,6 +21,7 @@ export const Recommend: VFC = memo(() => {
     setLoading(true);
     axios
       .get<Array<ResponseType>>("http://localhost:8000/news-similar-books")
+
       .then((res) => {
         console.log("ニュースの取得を開始します。↓");
         console.log(res.data);
