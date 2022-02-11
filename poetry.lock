@@ -440,6 +440,17 @@ optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
+name = "mangum"
+version = "0.12.4"
+description = "AWS Lambda & API Gateway support for ASGI"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+typing-extensions = "*"
+
+[[package]]
 name = "mecab-python3"
 version = "1.0.4"
 description = "Python wrapper for the MeCab morphological analyzer for Japanese"
@@ -812,7 +823,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ebad5231e29bac89e87644ba262cf4250475bb97406eeaac685b4ca34a3d0b34"
+content-hash = "1ab05cca27e183df5b7932fccd860654fe7af97e7cce052ce4b7ea43454996ff"
 
 [metadata.files]
 anyio = [
@@ -1155,6 +1166,10 @@ janome = [
 jmespath = [
     {file = "jmespath-0.10.0-py2.py3-none-any.whl", hash = "sha256:cdf6525904cc597730141d61b36f2e4b8ecc257c420fa2f4549bac2c2d0cb72f"},
     {file = "jmespath-0.10.0.tar.gz", hash = "sha256:b85d0567b8666149a93172712e68920734333c0ce7e89b78b3e987f71e5ed4f9"},
+]
+mangum = [
+    {file = "mangum-0.12.4-py3-none-any.whl", hash = "sha256:fd002d95dcef9dee9c3326604d821bda21195c6e9c7b5fe538502aa8475e403f"},
+    {file = "mangum-0.12.4.tar.gz", hash = "sha256:95732ebe2d205d9161eb7467ea1b9b0db3ae95a515f213916438d31126f09ef9"},
 ]
 mecab-python3 = [
     {file = "mecab-python3-1.0.4.tar.gz", hash = "sha256:b150ad5fe4260539b4ef184657e552ef81307fbbe60ae1f258bc814549ea90f8"},
