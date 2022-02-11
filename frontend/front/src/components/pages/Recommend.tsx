@@ -5,8 +5,6 @@ import { RecommendTitle } from "../atom/RecommendTitle";
 import { Header } from "../templates/Header";
 import { NewsCard } from "../templates/NewsCard";
 
-import { BookType } from "../types/Book";
-
 import { ResponseType } from "../types/Response";
 
 export const Recommend: VFC = memo(() => {
