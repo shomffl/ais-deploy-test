@@ -3,7 +3,6 @@ import { memo, VFC } from "react";
 import { ModalButton } from "../atom/ModalButton";
 import { BookModal } from "./BookModal";
 import { ResponseType } from "../types/Response";
-import { Link } from "react-router-dom";
 
 export const NewsCard: VFC<{ response: ResponseType }> = memo(
   ({ response }) => {
@@ -22,9 +21,9 @@ export const NewsCard: VFC<{ response: ResponseType }> = memo(
             stroke="currentColor"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"
             />
           </svg>
