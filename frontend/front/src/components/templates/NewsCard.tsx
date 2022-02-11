@@ -34,9 +34,9 @@ export const NewsCard: VFC<{ response: ResponseType }> = memo(
             {response.news.title}
           </h1>
           <p className="text-500 text-sm mt-4 mb-10">{response.news.summary}</p>
-          <Link to={response.news.url} className="pt-16 text-blue-700 ">
+          <a href={response.news.url} className="pt-16 text-blue-700 ">
             ニュースはこちら
-          </Link>
+          </a>
           <br />
           <ModalButton setModal={setModal} />
         </div>
