@@ -58,9 +58,9 @@ export const Recommend: VFC = memo(() => {
           <div className="container mx-auto mt-16 flex flex-wrap">
             {news.map((res, num) => (
               // この中に繰り返し処理を記述する
-              <div key={num}>
+              <span key={num}>
                 <NewsCard response={res} />
-              </div>
+              </span>
             ))}
           </div>
         </div>
