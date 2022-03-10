@@ -18,7 +18,9 @@ export const Recommend: VFC = memo(() => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get<Array<ResponseType>>("http://localhost:8000/news-similar-books")
+      .get<Array<ResponseType>>(
+        "https://a7d46inwo2.execute-api.us-east-1.amazonaws.com/news-similar-books"
+      )
 
       .then((res) => {
         console.log("ニュースの取得を開始します。↓");
