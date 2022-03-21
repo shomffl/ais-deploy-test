@@ -9,8 +9,8 @@ from api.utils.text import replaceTextFromNewsText, convert_full_width_to_half_w
 import api.settings as settings
 
 session = Session(
-    aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY_ID,
+    aws_access_key_id=settings.ACCESS_KEY_ID,
+    aws_secret_access_key=settings.SECRET_ACCESS_KEY_ID,
 )
 s3_bucket = "crawling-news-bucket"
 
