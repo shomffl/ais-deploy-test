@@ -12,5 +12,5 @@ frontend:
     baseDirectory: frontend/front/build
     files:
       - "**/*"
-  cache
+  cache:
     paths: []
