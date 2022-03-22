@@ -19,7 +19,7 @@ export const Recommend: VFC = memo(() => {
     setLoading(true);
     axios
       .get<Array<ResponseType>>(
-        "https://ewrps3dez9.execute-api.us-east-1.amazonaws.com/news-similar-books"
+        "https://tc0ecp2pqe.execute-api.us-east-1.amazonaws.com/news-similar-books"
       )
 
       .then((res) => {
