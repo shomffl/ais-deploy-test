@@ -139,7 +139,7 @@
                   {
                     "Ref": "AWS::URLSuffix"
                   },
-                  "/amplify-march21-dev-232337-api-test-app:latest"
+                  "/amplify-march22-dev-172511-api-test-app:latest"
                 ]
               ]
             },
@@ -241,7 +241,7 @@
                     {
                       "Ref": "AWS::AccountId"
                     },
-                    ":repository/amplify-march21-dev-232337-api-test-app"
+                    ":repository/amplify-march22-dev-172511-api-test-app"
                   ]
                 ]
               }
@@ -880,7 +880,7 @@
                         {
                           "Ref": "AWS::URLSuffix"
                         },
-                        "/amplify-march21-dev-232337-api-test-app\"}]"
+                        "/amplify-march22-dev-172511-api-test-app\"}]"
                       ]
                     ]
                   }
