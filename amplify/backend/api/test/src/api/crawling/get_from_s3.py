@@ -14,7 +14,8 @@ session = Session(
 )
 s3_bucket = "crawling-news-bucket"
 
-print(settings.ACCESS_KEY_ID)
+print("hello world")
+boto3.set_stream_logger()
 
 # @TODO:全体的に関数分けてリファクタしたい
 def fetch_updated_news_data_from_s3(limit):
