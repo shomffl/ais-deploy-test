@@ -14,6 +14,8 @@ session = Session(
 )
 s3_bucket = "crawling-news-bucket"
 
+print(settings.ACCESS_KEY_ID)
+
 # @TODO:全体的に関数分けてリファクタしたい
 def fetch_updated_news_data_from_s3(limit):
     s3 = session.resource("s3")
