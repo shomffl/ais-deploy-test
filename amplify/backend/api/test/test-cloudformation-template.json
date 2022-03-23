@@ -139,7 +139,7 @@
                   {
                     "Ref": "AWS::URLSuffix"
                   },
-                  "/amplify-march23-dev-163956-api-test-app:latest"
+                  "/amplify-march24-dev-204214-api-test-app:latest"
                 ]
               ]
             },
@@ -162,7 +162,38 @@
                 "Protocol": "tcp"
               }
             ],
-            "Secrets": []
+            "Secrets": [
+              {
+                "Name": "ACCESS_KEY_ID",
+                "ValueFrom": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:secretsmanager:us-east-1:279877178330:secret:",
+                      {
+                        "Ref": "rootStackName"
+                      },
+                      "-test-ACCESS_KEY_ID"
+                    ]
+                  ]
+                }
+              },
+              {
+                "Name": "SECRET_ACCESS_KEY_ID",
+                "ValueFrom": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:secretsmanager:us-east-1:279877178330:secret:",
+                      {
+                        "Ref": "rootStackName"
+                      },
+                      "-test-SECRET_ACCESS_KEY_ID"
+                    ]
+                  ]
+                }
+              }
+            ]
           }
         ],
         "Cpu": "512",
@@ -241,7 +272,7 @@
                     {
                       "Ref": "AWS::AccountId"
                     },
-                    ":repository/amplify-march23-dev-163956-api-test-app"
+                    ":repository/amplify-march24-dev-204214-api-test-app"
                   ]
                 ]
               }
@@ -278,6 +309,44 @@
                       "Ref": "appContainerLogGroup69857E65"
                     },
                     ":*"
+                  ]
+                ]
+              }
+            },
+            {
+              "Action": [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:secretsmanager:us-east-1:279877178330:secret:",
+                    {
+                      "Ref": "rootStackName"
+                    },
+                    "-test-ACCESS_KEY_ID-??????"
+                  ]
+                ]
+              }
+            },
+            {
+              "Action": [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:secretsmanager:us-east-1:279877178330:secret:",
+                    {
+                      "Ref": "rootStackName"
+                    },
+                    "-test-SECRET_ACCESS_KEY_ID-??????"
                   ]
                 ]
               }
@@ -880,7 +949,7 @@
                         {
                           "Ref": "AWS::URLSuffix"
                         },
-                        "/amplify-march23-dev-163956-api-test-app\"}]"
+                        "/amplify-march24-dev-204214-api-test-app\"}]"
                       ]
                     ]
                   }

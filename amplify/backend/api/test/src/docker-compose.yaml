@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   app:
     build: .
@@ -12,6 +12,14 @@ services:
     tty: true
     ports:
       - 80:80
+    secrets:
+      - ACCESS_KEY_ID
+      - SECRET_ACCESS_KEY_ID
+secrets:
+  ACCESS_KEY_ID:
+    file: ../secrets/.secret-id
+  SECRET_ACCESS_KEY_ID:
+    file: ../secrets/.secret-key
 networks:
   public:
   private:

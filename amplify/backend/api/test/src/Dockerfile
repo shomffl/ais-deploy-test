@@ -38,8 +38,6 @@ RUN if [ -f pyproject.toml ]; then poetry install; fi
 
 COPY ./api /api
 ENV PYTHONPATH=/api
-ENV ACCESS_KEY_ID=${ACCESS_KEY_ID}
-ENV SECRET_ACCESS_KEY_ID=${SECRET_ACCESS_KEY_ID}
 
 # uvicornのサーバーを立ち上げる
 CMD ["poetry", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "80"]
