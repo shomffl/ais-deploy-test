@@ -4,5 +4,5 @@ load_dotenv()
 # 環境変数を参照
 import os
 
-ACCESS_KEY_ID = os.getenv("ACCESS_KEY_ID")
-SECRET_ACCESS_KEY_ID = os.getenv("SECRET_ACCESS_KEY_ID")
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY_ID = os.getenv("AWS_SECRET_ACCESS_KEY_ID")

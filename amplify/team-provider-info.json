@@ -1,16 +1,16 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-march24-dev-204214-authRole",
-      "UnauthRoleArn": "arn:aws:iam::279877178330:role/amplify-march24-dev-204214-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::279877178330:role/amplify-march24-dev-204214-authRole",
+      "AuthRoleName": "amplify-april5-dev-01948-authRole",
+      "UnauthRoleArn": "arn:aws:iam::279877178330:role/amplify-april5-dev-01948-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::279877178330:role/amplify-april5-dev-01948-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-march24-dev-204214-deployment",
-      "UnauthRoleName": "amplify-march24-dev-204214-unauthRole",
-      "StackName": "amplify-march24-dev-204214",
-      "StackId": "arn:aws:cloudformation:us-east-1:279877178330:stack/amplify-march24-dev-204214/4bd02690-aa9e-11ec-a617-0a596c25fead",
-      "AmplifyAppId": "d1280xerxfqpts",
-      "NetworkStackS3Url": "https://s3.amazonaws.com/amplify-march24-dev-204214-deployment/amplify-cfn-templates/networkingStackTemplate.json"
+      "DeploymentBucketName": "amplify-april5-dev-01948-deployment",
+      "UnauthRoleName": "amplify-april5-dev-01948-unauthRole",
+      "StackName": "amplify-april5-dev-01948",
+      "StackId": "arn:aws:cloudformation:us-east-1:279877178330:stack/amplify-april5-dev-01948/ae56e840-b42a-11ec-9e49-0e8fce8b2d8f",
+      "AmplifyAppId": "d1p3pmm8qyzyih",
+      "NetworkStackS3Url": "https://s3.amazonaws.com/amplify-april5-dev-01948-deployment/amplify-cfn-templates/networkingStackTemplate.json"
     }
   }
 }
