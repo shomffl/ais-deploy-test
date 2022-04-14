@@ -1,54 +1,24 @@
-import axios from "axios";
-import { memo, VFC, useState, useEffect } from "react";
+import { memo, VFC, useEffect } from "react";
 
 import { RecommendTitle } from "../atom/RecommendTitle";
 import { Header } from "../templates/Header";
 import { NewsCard } from "../templates/NewsCard";
-
-import { ResponseType } from "../types/Response";
+import { GetData } from "../hooks/GetData";
+import { LoadingContent } from "../atom/LoadingContent";
 
 export const Recommend: VFC = memo(() => {
-  // ニュースの情報を保存しておくstateの宣言
-  const [news, setNews] = useState<Array<ResponseType>>([]);
+  // news&booksのデータの取得のhooksの展開
+  const { loading, news, getData } = GetData();
 
-  // axiosを叩いてloadingを管理するstatus
-  const [loading, setLoading] = useState(false);
-
-  //バックエンドからnewsを取得しstateに保存をする処理の記述;
+  // axiosを使ってAPIからデータを取得しているため、useEffectで再レンダリングがかからないようにする
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get<Array<ResponseType>>(
-        "https://7p3wo6bwi3.execute-api.us-east-1.amazonaws.com/news-similar-books"
-      )
-
-      .then((res) => {
-        console.log("ニュースの取得を開始します。↓");
-        console.log(res.data);
-        setNews(res.data);
-      })
-      .catch((error) => {
-        console.log(error.status);
-      })
-      .finally(() => {
-        console.log(news);
-        console.log("ニュースの取得が終了しました。");
-        setLoading(false);
-      });
-  }, []);
-
-  useEffect(() => {
-    console.log(news);
+    getData();
   }, []);
 
   return (
     <>
       {loading ? (
-        <div className="h-screen bg-gradient-to-br from-gray-700 via-gray-900 to-black">
-          <div className="pt-40 text-center animate-ping text-white text-size-lg">
-            loading...
-          </div>
-        </div>
+        <LoadingContent />
       ) : (
         <div className="w-full animate-fade-in-down h-full bg-gradient-to-br from-gray-700 via-gray-900 to-black">
           <Header
@@ -60,7 +30,7 @@ export const Recommend: VFC = memo(() => {
           <div className="container mx-auto mt-16 flex flex-wrap">
             {news.map((res, num) => (
               // この中に繰り返し処理を記述する
-              <span key={num}>
+              <span key={num} className="mb-7">
                 <NewsCard response={res} />
               </span>
             ))}

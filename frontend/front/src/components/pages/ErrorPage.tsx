@@ -6,8 +6,11 @@ import Number from "../Image/4.png";
 import { Button } from "../atom/Button";
 
 export const ErrorPage: VFC = memo(() => {
+  // 画面遷移のhistoryの展開
   const history = useHistory();
+
   const BackToTop = useCallback(() => history.push("/"), [history]);
+
   return (
     <div
       className="h-screen 

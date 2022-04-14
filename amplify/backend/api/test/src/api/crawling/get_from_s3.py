@@ -129,7 +129,7 @@ def make_news_for_demo():
         },
     }
     
-    result = convert_news_to_correct_schema(news_data, 11, crawled_at)
+    result = convert_news_to_correct_schema(news_data, 25, crawled_at)
     
     return result
 
